@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Klant;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use Illuminate\Contracts\Auth\Factory;
@@ -15,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
         ]);
+        Klant::factory(50)->create();
     }
 }
