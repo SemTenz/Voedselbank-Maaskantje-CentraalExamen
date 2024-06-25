@@ -20,6 +20,8 @@
             <td>{{ $voedselpakket->datumSamenstelling }}</td>
             <td>{{ $voedselpakket->datumUitgifte }}</td>
 
+
+
             <td><a href="{{ route('voedselpakket.edit', $voedselpakket->id) }}">Edit</a></td>
 
             <td>

@@ -6,6 +6,7 @@ use App\Models\VoedselPakket;
 
 use Illuminate\Http\Request;
 use App\Models\Klant;
+use App\Models\Product;
 
 class VoedselPakketController extends Controller
 {
@@ -20,12 +21,15 @@ class VoedselPakketController extends Controller
     public function create($klant_id)
     {
         $klant = Klant::findOrFail($klant_id);
-        return view('voedselpakket.create', compact('klant'));
+        $products = Product::all();
+
+
+        return view('voedselpakket.create', compact('klant', 'products'));
     }
     public function store(Request $request)
     {
 
-
+        dd($request->all());
         $voedselpakket = new VoedselPakket();
         $voedselpakket->datumUitgifte = $request->datum_uitgegeven;
         $voedselpakket->datumSamenstelling = now();
