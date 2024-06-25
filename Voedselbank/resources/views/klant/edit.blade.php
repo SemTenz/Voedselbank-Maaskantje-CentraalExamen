@@ -6,7 +6,7 @@
         @method('PUT')
 
         <label for="datum_uitgegeven">Datum uitgegeven</label>
-        <input type="date" name="datum_uitgegeven" id="datum_uitgegeven" value="{{ $voedselpakketten->datum_uitgegeven->format('d-m-y') }}" required>
+        <input type="date" name="datum_uitgegeven" id="datum_uitgegeven" value="{{ $voedselpakketten->datum_uitgegeven->format('Y-m-d') }}" required>
 
         <input type="hidden" name="klant_id" value="{{ $klant->id }}">
 
