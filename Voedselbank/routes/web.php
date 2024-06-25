@@ -31,19 +31,11 @@ Route::get('/klant/{id}', [KlantenController::class, 'show'])->name('klant.show'
 Route::delete('/voedselpakket/{id}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
 
 
-
-
-
 Route::get('/voedselpakket', [VoedselPakketController::class, 'index'])->name('voedselpakket.index');
 Route::get('/voedselpakket/create/{klant_id}', [VoedselPakketController::class, 'create'])->name('voedselpakket.create');
 Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('voedselpakket.store');
 Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
-
-
-
-
-
 
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
