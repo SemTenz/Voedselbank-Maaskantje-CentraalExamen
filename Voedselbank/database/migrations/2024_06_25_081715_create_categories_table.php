@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
             $table->timestamps();
         });
 
-    
+
         DB::table('categories')->insert([
             ['name' => 'Brood'],
             ['name' => 'Vis'],
@@ -42,5 +42,3 @@ class CreateCategoriesTable extends Migration
         Schema::dropIfExists('categories');
     }
 }
-
-
