@@ -22,4 +22,9 @@ class klant extends Model
         'voedselpakketId',
         'adressId',
     ];
+
+    public function voedselpakketten()
+    {
+        return $this->hasMany(VoedselPakket::class);
+    }
 }

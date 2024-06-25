@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('voedselwensen');
             $table->integer('voedselpakketId');
             $table->integer('adressId');
+            $table->boolean('has_voedselpakket')->default(false);
             $table->timestamps();
         });
     }

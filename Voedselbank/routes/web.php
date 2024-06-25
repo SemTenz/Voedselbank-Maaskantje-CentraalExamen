@@ -37,19 +37,27 @@ Route::middleware('auth')->group(function () {
 Route::get('/klant', [KlantenController::class, 'index'])->name('klant.index');
 Route::get('/klant/create', [KlantenController::class, 'create'])->name('klant.create');
 Route::post('/klant', [KlantenController::class, 'store'])->name('klant.store');
-Route::get('/klant/{klant}/edit', [KlantenController::class, 'edit'])->name('klant.edit');
+Route::get('/klant/{id}/edit', 'VoedselPakketController@edit')->name('klant.edit');
 Route::put('/klant/{klant}', [KlantenController::class, 'update'])->name('klant.update');
 Route::delete('/klant/{klant}', [KlantenController::class, 'destroy'])->name('klant.destroy');
+Route::get('/klant/{id}', [KlantenController::class, 'show'])->name('klant.show');
+Route::delete('/voedselpakket/{id}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
+
+
+
+
 
 Route::get('/voedselpakket', [VoedselPakketController::class, 'index'])->name('voedselpakket.index');
 Route::get('/voedselpakket/create/{klant_id}', [VoedselPakketController::class, 'create'])->name('voedselpakket.create');
 Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('voedselpakket.store');
 Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
-Route::delete('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
+
+
+
 
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

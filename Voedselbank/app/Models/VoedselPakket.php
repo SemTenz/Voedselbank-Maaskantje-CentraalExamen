@@ -10,4 +10,10 @@ class VoedselPakket extends Model
     use HasFactory;
 
     protected $table = 'voedsel_pakket';
+
+
+    public function products()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

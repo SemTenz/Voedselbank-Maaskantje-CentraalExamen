@@ -10,7 +10,7 @@
 
         <td>edit </td>
         <td>delete </td>
-        <td><a href="{{route('voedselpakket.create')}}">voeg een nieuw voedselpakket toe</a></td>
+
         </th>
         <tr>
             @foreach($voedselpakketten as $voedselpakket)
@@ -19,6 +19,8 @@
             <td>test</td>
             <td>{{ $voedselpakket->datumSamenstelling }}</td>
             <td>{{ $voedselpakket->datumUitgifte }}</td>
+
+
 
             <td><a href="{{ route('voedselpakket.edit', $voedselpakket->id) }}">Edit</a></td>
 
