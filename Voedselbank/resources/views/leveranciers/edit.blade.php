@@ -52,10 +52,10 @@
                         <div class="mb-4">
                             <label for="telefoonnummer"
                                 class="block text-sm font-medium text-gray-700 dark:text-white">Telefoonnummer</label>
-                            <input type="text"
+                            <input type="tel" pattern="[0-9]*" minlength="8"
                                 class="form-input mt-1 block w-full px-3 py-2 border dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 id="telefoonnummer" name="telefoonnummer" value="{{ $leverancier->telefoonnummer }}"
-                                required>
+                                required title="Voer alleen numerieke waarden in (0-9), minimaal 8 cijfers">
                         </div>
 
                         <div class="mb-4">
@@ -65,7 +65,8 @@
                             <input type="datetime-local"
                                 class="form-input mt-1 block w-full px-3 py-2 border dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                 id="eerstvolgende_levering" name="eerstvolgende_levering"
-                                value="{{ $leverancier->eerstvolgende_levering }}" required>
+                                value="{{ \Carbon\Carbon::parse($leverancier->eerstvolgende_levering)->format('Y-m-d\TH:i') }}"
+                                required min="{{ now()->format('Y-m-d\TH:i') }}">
                         </div>
 
                         <button type="submit"
@@ -77,4 +78,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // JavaScript om de minimale waarde van eerstvolgende_levering in te stellen op huidige datum en tijd
+        document.getElementById('eerstvolgende_levering').min = new Date().toISOString().slice(0, 16);
+
+        // JavaScript voor het valideren van telefoonnummer lengte
+        document.getElementById('leverancierForm').addEventListener('submit', function(event) {
+            const telefoonnummerInput = document.getElementById('telefoonnummer');
+            const telefoonnummer = telefoonnummerInput.value.trim();
+
+            // Controleer minimale lengte (hier 8 cijfers)
+            if (telefoonnummer.length < 8) {
+                // Voorkom dat het formulier wordt verzonden
+                event.preventDefault();
+                // Geef een melding aan de gebruiker
+                telefoonnummerInput.setCustomValidity('Voer minimaal 8 cijfers in voor het telefoonnummer.');
+            } else {
+                // Reset de validatie naar standaard
+                telefoonnummerInput.setCustomValidity('');
+            }
+        });
+    </script>
 </x-app-layout>

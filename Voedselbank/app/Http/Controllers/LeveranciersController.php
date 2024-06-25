@@ -9,7 +9,8 @@ class LeveranciersController extends Controller
 {
     public function index()
     {
-        $leveranciers = Leverancier::all();
+        $leveranciers = Leverancier::orderBy('eerstvolgende_levering', 'asc')->get();
+
         return view('leveranciers.index', compact('leveranciers'));
     }
 
