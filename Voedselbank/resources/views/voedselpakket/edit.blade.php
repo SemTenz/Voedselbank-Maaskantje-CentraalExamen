@@ -1,25 +1,25 @@
 <x-app-layout>
     <link href="{{ asset('css/table.css') }}" rel="stylesheet">
-    <form action="{{ route('voedselpakket.update', $klant->id) }}" method="POST">
+    <form action="{{ route('voedselpakket.update', $voedselpakket->id) }}" method="POST">
         @csrf
         @method('PUT')
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <label for="pakket_inhoud">Pakket inhoud</label>
         <label for="datum_uitgegeven">Datum uitgegeven</label>
-        <input type="date" name="datum_uitgegeven" id="datum_uitgegeven" value="{{ $voedselpakketten[0]->datum_uitgegeven }}" required>
+        <input type="date" name="datum_uitgegeven" id="datum_uitgegeven" value="{{ $voedselpakket->datum_uitgegeven }}" required>
         <input type="hidden" name="klant_id" value="{{ $klant->id }}">
 
         <div id="product-container">
-            @foreach ($voedselpakketten as $voedselpakket)
+            @foreach ($voedselpakket->products as $product)
             <div class="product-row">
                 <label for="products">Producten:</label>
                 <br>
                 <select name="products[]" class="product-select" required>
                     @foreach($products as $product)
-                    <option value="{{ $product->id }}" {{ $product->id == $voedselpakket->product_id ? 'selected' : '' }}>{{ $product->naam }}</option>
+                    <option value="{{ $product->id }}" {{ $product->id == $product->id ? 'selected' : '' }}>{{ $product->naam }}</option>
                     @endforeach
                 </select>
-                <input type="number" name="quantities[]" class="product-quantity" placeholder="Hoeveelheid" min="1" value="{{ $voedselpakket->quantity }}" required>
+                <input type="number" name="quantities[]" class="product-quantity" placeholder="Hoeveelheid" min="1" value="{{ $product->quantity }}" required>
                 <button type="button" class="remove-product-btn">Verwijder</button>
             </div>
             @endforeach
