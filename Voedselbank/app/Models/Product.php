@@ -9,7 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['naam', 'allergie_id', 'categorie_id'];
+    protected $fillable = ['naam', 'allergie_id', 'categorie_id', 'aantal'];
+
 
     public function allergie()
     {

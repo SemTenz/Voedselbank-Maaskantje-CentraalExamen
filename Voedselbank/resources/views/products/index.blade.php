@@ -116,6 +116,24 @@
                         </tbody>
                     </table>
 
+                    @if (!empty($searchMessage))
+<div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+    <div class="flex">
+        <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 6a1 1 0 011-1h.5a.5.5 0 010 1h-.5a1 1 0 01-1-1zm1 6a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+            </svg>
+        </div>
+        <div class="ml-3">
+            <p class="text-sm leading-5 font-medium">
+                {{ $searchMessage }}
+            </p>
+        </div>
+    </div>
+</div>
+@endif
+
+
                     <!-- Voeg paginering links toe -->
                     <div class="mt-4">
                         {{ $products->links() }}
