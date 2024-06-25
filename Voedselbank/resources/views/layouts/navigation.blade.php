@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
+                    <x-nav-link :href="route('allergie.index')" :active="request()->routeIs('allergie.index')">
+                        {{ __('Allergie overzicht') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -41,7 +46,6 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
