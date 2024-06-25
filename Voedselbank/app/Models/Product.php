@@ -20,10 +20,4 @@ class Product extends Model
     {
         return $this->belongsTo(Categorie::class, 'categorie_id');
     }
-
-
-    public function voedselpakketten()
-    {
-        return $this->hasMany(VoedselPakket::class, 'product_id');
-    }
 }

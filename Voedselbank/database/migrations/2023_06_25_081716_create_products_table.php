@@ -11,8 +11,10 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('naam');
+            $table->string('streepjescode')->default(''); // Voeg streepjescode met een default waarde toe
             $table->unsignedBigInteger('allergie_id')->nullable();
             $table->unsignedBigInteger('categorie_id')->nullable();
+            $table->unsignedInteger('aantal')->default(0); // Toegevoegd voor aantal, standaard op 0
             $table->timestamps();
             $table->foreign('allergie_id')->references('id')->on('allergies')->onDelete('set null');
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
