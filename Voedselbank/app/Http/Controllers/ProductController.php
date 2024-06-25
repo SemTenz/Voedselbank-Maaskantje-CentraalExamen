@@ -9,12 +9,22 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /**
+     * Toon een lijst met alle producten.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $products = Product::all();
         return view('products.index', compact('products'));
     }
 
+    /**
+     * Toon het formulier voor het maken van een nieuw product.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $allergies = Allergie::all();
@@ -22,6 +32,12 @@ class ProductController extends Controller
         return view('products.create', compact('allergies', 'categories'));
     }
 
+    /**
+     * Opslaan van een nieuw product in de database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -32,9 +48,15 @@ class ProductController extends Controller
 
         Product::create($request->all());
 
-        return redirect()->route('products.create')->with('success', 'Product created successfully.');
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
+    /**
+     * Toon het formulier voor het bewerken van een bestaand product.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $product = Product::findOrFail($id);
@@ -43,6 +65,13 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'allergies', 'categories'));
     }
 
+    /**
+     * Bijwerken van een bestaand product in de database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -57,6 +86,12 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
+    /**
+     * Verwijderen van een product uit de database.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
