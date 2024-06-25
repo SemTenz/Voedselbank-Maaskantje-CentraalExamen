@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VoedselPakketController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::get('/voedselpakket', [VoedselPakketController::class, 'index'])->name('voedselpakket.index');
+Route::get('/voedselpakket/create', [VoedselPakketController::class, 'create'])->name('voedselpakket.create');
+Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('voedselpakket.store');
+Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
+Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
+Route::delete('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
+require __DIR__ . '/auth.php';
