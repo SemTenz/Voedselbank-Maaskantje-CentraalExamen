@@ -16,26 +16,25 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        // Haal alle producten op
         $productsQuery = Product::query();
-
-        // Filter op streepjescode indien opgegeven in het zoekveld
+    
         $barcode = $request->input('barcode');
         if ($barcode) {
             $productsQuery->where('streepjescode', 'like', '%' . $barcode . '%');
         }
-
-        // Sorteer producten op basis van de gespecificeerde kolom (standaard op naam)
+    
         $sort_by = $request->input('sort_by', 'naam');
         $sort_order = $request->input('sort_order', 'asc');
         if (in_array($sort_by, ['streepjescode', 'naam', 'categorie_id', 'aantal'])) {
             $productsQuery->orderBy($sort_by, $sort_order);
         }
-
-        $products = $productsQuery->get();
-        $categories = Categorie::all(); // Haal alle categorieën op
-        $allergies = Allergie::all(); // Haal alle allergieën op
-
+    
+        // Voeg paginering toe met een limiet van 10 producten per pagina
+        $products = $productsQuery->paginate(8);
+    
+        $categories = Categorie::all();
+        $allergies = Allergie::all();
+    
         return view('products.index', compact('products', 'categories', 'allergies', 'sort_by', 'sort_order'));
     }
 
