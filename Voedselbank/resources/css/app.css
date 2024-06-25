@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+table {
+    width: 100%;
+    border: 1px solid black;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.product-row {
+    margin-bottom: 10px;
+}
+.product-row select,
+.product-row input {
+    margin-right: 10px;
+}
+.product-list {
+    margin-top: 20px;
+}
+.product-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+.product-list li {
+    margin-bottom: 10px;
+}
