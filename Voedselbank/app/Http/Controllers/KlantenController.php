@@ -2,34 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\klant;
 use App\Models\VoedselPakket;
 
 use Illuminate\Http\Request;
-use App\Models\Klant;
 
-class VoedselPakketController extends Controller
+class KlantenController extends Controller
 {
     public function index()
     {
-        $voedselpakketten = VoedselPakket::all();
 
-
-        return view('voedselpakket.index', compact('voedselpakketten'));
+        $klant = klant::all();
+        return view('klant.index', compact('klant'));
     }
-
-    public function create($klant_id)
+    public function create()
     {
-
-        return view('voedselpakket.create', compact('klant_id'));
+        return view('voedselpakket.create');
     }
+
     public function store(Request $request)
     {
 
-        dd($request->all());
         $voedselpakket = new VoedselPakket();
         $voedselpakket->datumUitgifte = now();
         $voedselpakket->datumSamenstelling = now();
-        $voedselpakket->klant_id = $request->klant_id;
+        $voedselpakket->klant_id = 1;
         $voedselpakket->save();
 
         return redirect()->route('voedselpakket.index');
