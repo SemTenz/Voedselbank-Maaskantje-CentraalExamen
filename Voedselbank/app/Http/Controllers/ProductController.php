@@ -35,7 +35,15 @@ class ProductController extends Controller
         $categories = Categorie::all();
         $allergies = Allergie::all();
     
-        return view('products.index', compact('products', 'categories', 'allergies', 'sort_by', 'sort_order'));
+        // Controleer of er resultaten zijn gevonden
+        $searchMessage = '';
+        if ($barcode && $products->isEmpty()) {
+            $searchMessage = 'Geen producten gevonden met het opgegeven streepjescode.';
+        } elseif ($products->isEmpty()) {
+            $searchMessage = 'Geen producten gevonden.';
+        }
+    
+        return view('products.index', compact('products', 'categories', 'allergies', 'sort_by', 'sort_order', 'searchMessage'));
     }
 
     /**
@@ -76,7 +84,7 @@ class ProductController extends Controller
     $product->aantal = $request->aantal; // Voeg aantal toe
     $product->save();
 
-    return redirect()->route('products.index')->with('success', 'Product succesvol aangemaakt.');
+    return redirect()->route('products.index')->with('Product succesvol aangemaakt.');
 }
 
 /**
@@ -110,7 +118,6 @@ private function generateRandomNumericString($length)
         $categories = Categorie::all();
         return view('products.edit', compact('product', 'allergies', 'categories'));
     }
-
     /**
      * Bijwerken van een bestaand product in de database.
      *
@@ -124,13 +131,20 @@ private function generateRandomNumericString($length)
             'naam' => 'required',
             'allergie_id' => 'nullable|exists:allergies,id',
             'categorie_id' => 'nullable|exists:categories,id',
+            'aantal' => 'required|integer|min:0',
         ]);
-
+    
         $product = Product::findOrFail($id);
-        $product->update($request->all());
-
-        return redirect()->route('products.index')->with('success', 'Product succesvol aangepast.');
+        $product->update([
+            'naam' => $request->naam,
+            'allergie_id' => $request->allergie_id,
+            'categorie_id' => $request->categorie_id,
+            'aantal' => $request->aantal,
+        ]);
+    
+        return redirect()->route('products.index')->with('Product succesvol aangepast.');
     }
+    
 
     /**
      * Verwijderen van een product uit de database.
@@ -143,7 +157,7 @@ private function generateRandomNumericString($length)
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product succesvol verwijderd.');
+        return redirect()->route('products.index')->with('Product succesvol verwijderd.');
     }
 }
 

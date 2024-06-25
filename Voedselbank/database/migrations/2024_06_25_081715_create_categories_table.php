@@ -18,22 +18,15 @@ class CreateCategoriesTable extends Migration
 
 
         DB::table('categories')->insert([
-            ['name' => 'Brood'],
-            ['name' => 'Vis'],
-            ['name' => 'Vlees'],
-            ['name' => 'Groente'],
-            ['name' => 'Fruit'],
-            ['name' => 'Zuivel'],
-            ['name' => 'Dranken'],
-            ['name' => 'Snoep'],
-            ['name' => 'Koek'],
-            ['name' => 'Chips'],
-            ['name' => 'Noten'],
-            ['name' => 'Sauzen'],
-            ['name' => 'Soep'],
-            ['name' => 'Kant-en-klaar'],
-            ['name' => 'Diepvries'],
-            ['name' => 'Overig'],
+            ['name' => 'Brood, groente, fruit'],
+            ['name' => 'Klaas, vleeswaren'],
+            ['name' => 'Zuivel, plantaardig en eieren'],
+            ['name' => 'Bakkerij en banket'],
+            ['name' => 'Frisdrank, sappen, koffie en thee'],
+            ['name' => 'Pasta, rijst en wereldkeuken'],
+            ['name' => 'Soepen, sauzen, kruiden en olie'],
+            ['name' => 'Snoep, koek, chips en chocolade'],
+            ['name' => 'Baby, verzorging en hygiene'],
         ]);
     }
 
