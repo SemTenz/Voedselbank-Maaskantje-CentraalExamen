@@ -8,8 +8,7 @@
             <th>Aantal Kinderen</th>
             <th>Aantal Baby</th>
             <th>Voedselwensen</th>
-            <th>Voedselpakket ID</th>
-            <th>Adres ID</th>
+
 
         </tr>
     </thead>
