@@ -5,6 +5,33 @@
         </h2>
     </x-slot>
 
+    <style>
+        .custom-notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #48BB78;
+            color: #FFFFFF;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+
+        .custom-notification.show {
+            display: block;
+        }
+
+        .custom-notification .close-btn {
+            cursor: pointer;
+            margin-left: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
+    </style>
+
     <div class="py-12 flex justify-center">
         <div class="w-full sm:w-2/3">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
@@ -95,5 +122,58 @@
                 telefoonnummerInput.setCustomValidity('');
             }
         });
+
+        // JavaScript om melding te tonen na succesvolle toevoeging van een leverancier
+        const form = document.getElementById('leverancierForm');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    showNotification('Leverancier succesvol toegevoegd!');
+                    setTimeout(() => {
+                        window.location.replace(
+                        '{{ route('leveranciers.index') }}'); // Redirect naar overzichts pagina
+                    }, 2000); // Redirect na 2 seconden
+                } else {
+                    showNotification('Er is een fout opgetreden bij het toevoegen van de leverancier.',
+                    'error');
+                }
+            } catch (error) {
+                console.error('Fout bij het verwerken van de aanvraag:', error);
+                showNotification('Er is een fout opgetreden bij het verwerken van de aanvraag.', 'error');
+            }
+        });
+
+        // Functie om melding te tonen
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.classList.add('custom-notification');
+            notification.textContent = message;
+
+            if (type === 'success') {
+                notification.style.backgroundColor = '#48BB78';
+            } else if (type === 'error') {
+                notification.style.backgroundColor = '#F56565';
+            }
+
+            const closeBtn = document.createElement('span');
+            closeBtn.innerHTML = '&times;';
+            closeBtn.classList.add('close-btn');
+            closeBtn.addEventListener('click', () => {
+                notification.remove();
+            });
+
+            notification.appendChild(closeBtn);
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100); // Voeg .show klasse toe na 100ms
+        }
     </script>
 </x-app-layout>

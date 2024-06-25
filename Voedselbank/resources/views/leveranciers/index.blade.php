@@ -77,7 +77,8 @@
                                             <a href="{{ route('leveranciers.edit', $leverancier->id) }}"
                                                 class="text-blue-600 hover:text-blue-900 dark:text-yellow-400 dark:hover:text-yellow-600">Bewerk</a>
                                             <form action="{{ route('leveranciers.destroy', $leverancier->id) }}"
-                                                method="POST" style="display: inline;">
+                                                method="POST" style="display: inline;"
+                                                onsubmit="return showConfirmDelete(event, '{{ route('leveranciers.destroy', $leverancier->id) }}');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
@@ -99,4 +100,79 @@
             </div>
         </div>
     </div>
+
+    <div class="confirm-delete" id="confirmDelete">
+        <div class="confirm-delete-content">
+            <p>Weet je zeker dat je deze leverancier wilt verwijderen?</p>
+            <div class="btn-container">
+                <form id="deleteForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded">Verwijderen</button>
+                </form>
+                <button type="button" onclick="closeConfirmDelete()"
+                    class="bg-gray-500 text-white hover:bg-gray-700 px-4 py-2 rounded">Annuleren</button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .confirm-delete {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .confirm-delete-content {
+            background-color: #1a202c;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .confirm-delete p {
+            margin-bottom: 1rem;
+            color: #cbd5e0;
+        }
+
+        .confirm-delete .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .confirm-delete button {
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            outline: none;
+        }
+
+        .confirm-delete button:hover {
+            opacity: 0.8;
+        }
+    </style>
+
+    <script>
+        function showConfirmDelete(event, formAction) {
+            event.preventDefault();
+            const deleteForm = document.getElementById('deleteForm');
+            deleteForm.action = formAction;
+            document.getElementById('confirmDelete').style.display = 'block';
+        }
+
+        function closeConfirmDelete() {
+            document.getElementById('confirmDelete').style.display = 'none';
+        }
+    </script>
 </x-app-layout>

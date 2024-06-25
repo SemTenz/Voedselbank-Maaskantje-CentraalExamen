@@ -22,16 +22,103 @@
                         <a href="{{ route('leveranciers.edit', $leverancier->id) }}"
                             class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bewerk</a>
 
-                        <form action="{{ route('leveranciers.destroy', $leverancier->id) }}" method="POST"
-                            style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="inline-block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Verwijder</button>
-                        </form>
+                        <button type="button" id="deleteButton"
+                            class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Verwijderen
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Verwijderingsbevestiging Modal -->
+    <div class="confirm-delete" id="confirmDelete">
+        <div class="confirm-delete-content">
+            <p>Weet je zeker dat je deze leverancier wilt verwijderen? Dit kan niet ongedaan worden gemaakt.</p>
+            <div class="btn-container">
+                <button type="button" id="cancelDelete"
+                    class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    Annuleren
+                </button>
+                <button type="button" id="confirmDeleteButton"
+                    class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Verwijderen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .confirm-delete {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .confirm-delete-content {
+            background-color: #1a202c;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .confirm-delete p {
+            margin-bottom: 1rem;
+            color: #cbd5e0;
+        }
+
+        .confirm-delete .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .confirm-delete button {
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 0.25rem;
+            outline: none;
+        }
+
+        .confirm-delete button:hover {
+            opacity: 0.8;
+        }
+    </style>
+
+    <script>
+        const deleteButton = document.getElementById('deleteButton');
+        const confirmDelete = document.getElementById('confirmDelete');
+        const cancelDelete = document.getElementById('cancelDelete');
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+
+        deleteButton.addEventListener('click', function() {
+            confirmDelete.style.display = 'block';
+        });
+
+        cancelDelete.addEventListener('click', function() {
+            confirmDelete.style.display = 'none';
+        });
+
+        confirmDeleteButton.addEventListener('click', function() {
+            const deleteForm = document.createElement('form');
+            deleteForm.action = "{{ route('leveranciers.destroy', $leverancier->id) }}";
+            deleteForm.method = 'POST';
+            deleteForm.innerHTML = `
+                @csrf
+                @method('DELETE')
+            `;
+            document.body.appendChild(deleteForm);
+            deleteForm.submit();
+        });
+    </script>
 </x-app-layout>
