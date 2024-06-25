@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Allergy; // Using the Allergy model
+use App\Models\Allergie; // Using the Allergie model
 use Illuminate\Support\Facades\Log;
 
 class AllergieController extends Controller
@@ -12,7 +12,7 @@ class AllergieController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Allergy::query();
+            $query = Allergie::query();
     
             // Initialize sort variables
             $sort_by = $request->input('sort_by', 'default_column_name'); // Replace 'default_column_name' with your default sort column
@@ -51,7 +51,7 @@ class AllergieController extends Controller
             'name' => 'required',
         ]);
 
-        $allergie = new Allergy();
+        $allergie = new Allergie();
         $allergie->name = $request->name;
 
         $allergie->save();
@@ -69,7 +69,7 @@ class AllergieController extends Controller
 
     public function edit($id)
     {
-        $allergie = Allergy::findOrFail($id);
+        $allergie = Allergie::findOrFail($id);
         return view('allergie.edit', compact('allergie'));
     }
 
@@ -80,7 +80,7 @@ class AllergieController extends Controller
         ]);
 
         try {
-            $allergie = Allergy::findOrFail($id);
+            $allergie = Allergie::findOrFail($id);
             $allergie->name = $request->name;
             $allergie->save();
             session()->flash('success', 'Allergie succesvol bijgewerkt!');
@@ -93,7 +93,7 @@ class AllergieController extends Controller
     public function destroy($id)
     {
         try {
-            $allergie = Allergy::findOrFail($id);
+            $allergie = Allergie::findOrFail($id);
             $allergie->delete();
             session()->flash('success', 'Allergie succesvol verwijderd!');
         } catch (\Exception $e) {
