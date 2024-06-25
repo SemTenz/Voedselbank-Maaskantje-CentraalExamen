@@ -32,7 +32,15 @@ class AllergieController extends Controller
 
         $allergie->save();
 
-        return redirect()->route('allergie.index')->with('success', 'Allergie added successfully');
+        try {
+            $allergie->save();
+            session()->flash('success', 'Allergie succesvol toegevoegd!');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Er is een onverwachte fout opgetreden.');
+        }
+
+        session()->flash('success', 'Allergie succesvol toegevoegd!');
+        return redirect()->route('allergie.index');
     }
 
     public function edit($id)
@@ -47,18 +55,26 @@ class AllergieController extends Controller
             'name' => 'required',
         ]);
 
-        $allergie = Allergy::findOrFail($id);
-        $allergie->name = $request->name;
-        $allergie->save();
-
-        return redirect()->route('allergie.index')->with('success', 'Allergie updated successfully');
+        try {
+            $allergie = Allergy::findOrFail($id);
+            $allergie->name = $request->name;
+            $allergie->save();
+            session()->flash('success', 'Allergie succesvol bijgewerkt!');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Er is een onverwachte fout opgetreden.');
+        }
+        return redirect()->route('allergie.index');
     }
 
     public function destroy($id)
     {
-        $allergie = Allergy::findOrFail($id);
-        $allergie->delete();
-
-        return redirect()->route('allergie.index')->with('success', 'Allergie deleted successfully');
-    }
+        try {
+            $allergie = Allergy::findOrFail($id);
+            $allergie->delete();
+            session()->flash('success', 'Allergie succesvol verwijderd!');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Er is een onverwachte fout opgetreden.');
+        }
+        return redirect()->route('allergie.index');
+            }
 }

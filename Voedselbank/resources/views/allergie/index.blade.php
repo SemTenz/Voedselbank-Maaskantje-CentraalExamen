@@ -5,7 +5,27 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
                         <h1 class="text-2xl font-semibold">Allergenen</h1>
-                        <a href="{{ route('allergie.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Allergie toevoegen</a>
+                            @if(session('success'))
+                                <div id="successMessage" class="bg-green-500 text-white font-bold py-2 px-4 rounded inline-block mb-2">
+                                    {{ session('success') }}
+                                </div>
+                                <script>
+                                    setTimeout(function() {
+                                        document.getElementById('successMessage').style.display = 'none';
+                                    }, 3000);
+                                </script>
+                            @endif
+                            @if(session('error')) <!-- Error message block -->
+                                <div id="errorMessage" class="bg-red-500 text-white font-bold py-2 px-4 rounded inline-block mb-2">
+                                    {{ session('error') }}
+                                </div>
+                                <script>
+                                    setTimeout(function() {
+                                        document.getElementById('errorMessage').style.display = 'none';
+                                    }, 3000);
+                                </script>
+                            @endif
+                            <a href="{{ route('allergie.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Allergie toevoegen</a>
                     </div>
                     <table class="min-w-full divide-y divide-gray-200 mt-6">
                         <thead class="bg-gray-700">
