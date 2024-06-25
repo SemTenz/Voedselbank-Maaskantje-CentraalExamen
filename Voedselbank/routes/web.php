@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VoedselPakketController;
 use App\Http\Controllers\KlantenController;
+use App\Http\Controllers\ProductController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -38,4 +39,12 @@ Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('
 Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
 Route::delete('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
+
+
+
+
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+
 require __DIR__ . '/auth.php';
