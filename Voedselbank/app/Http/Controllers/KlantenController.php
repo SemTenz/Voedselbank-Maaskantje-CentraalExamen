@@ -15,51 +15,11 @@ class KlantenController extends Controller
         $klant = klant::all();
         return view('klant.index', compact('klant'));
     }
-    public function create()
+
+    public function show($id)
     {
-        return view('voedselpakket.create');
-    }
+        $klant = Klant::with('voedselpakketten.products')->find($id);
 
-    public function store(Request $request)
-    {
-
-        $voedselpakket = new VoedselPakket();
-        $voedselpakket->datumUitgifte = now();
-        $voedselpakket->datumSamenstelling = now();
-        $voedselpakket->klant_id = 1;
-        $voedselpakket->save();
-
-        return redirect()->route('voedselpakket.index');
-    }
-
-    public function edit($id)
-    {
-        $voedselpakket = VoedselPakket::findOrFail($id);
-
-        return view('voedselpakket.edit', compact('voedselpakket'));
-    }
-
-
-    public function update(Request $request, $id)
-    {
-        $voedselpakket = VoedselPakket::findOrFail($id);
-
-        $voedselpakket->datumUitgifte = $request->datum_uitgegeven;
-        $voedselpakket->datumSamenstelling = now();
-        $voedselpakket->klant_id = 1; // Update this as needed
-
-        $voedselpakket->save();
-
-        return redirect()->route('voedselpakket.index');
-    }
-
-
-    public function destroy($id)
-    {
-        $voedselpakket = VoedselPakket::findOrFail($id);
-
-        $voedselpakket->delete();
-
-        return redirect()->route('voedselpakket.index');
+        return view('klant.show', compact('klant'));
     }
 }

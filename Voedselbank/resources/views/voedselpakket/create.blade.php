@@ -26,23 +26,19 @@
     </form>
     <script>
         $(document).ready(function() {
+            var options = '@foreach($products as $product)<option value="{{ $product->id }}">{{ $product->naam }}</option>@endforeach';
+
             $('#add-product-btn').click(function() {
                 let productRow = `
-                    <div class="product-row">
-                        <select name="products[]" class="product-select" required>
-                            @foreach($products as $product)
-                                <option value="{{ $product->id }}">{{ $product->naam }}</option>
-                            @endforeach
-                        </select>
-                        <input type="number" name="quantities[]" class="product-quantity" placeholder="Hoeveelheid" min="1" required>
-                        <button type="button" class="remove-product-btn">Verwijder</button>
-                    </div>
-                `;
-                $('#product-container').append(productRow);
-            });
+                <div class="product-row">
+                    <select name="products[]" class="product-select" required>
+                        ` + options + `
+                    </select>
+                    <input type="number" name="quantities[]" class="product-quantity" placeholder="Hoeveelheid" min="1" required>
+                </div>
+            `;
 
-            $(document).on('click', '.remove-product-btn', function() {
-                $(this).closest('.product-row').remove();
+                $('.product-row').last().after(productRow);
             });
         });
     </script>

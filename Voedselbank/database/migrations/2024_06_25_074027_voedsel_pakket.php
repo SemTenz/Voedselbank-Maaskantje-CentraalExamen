@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+
         Schema::create('voedsel_pakket', function (Blueprint $table) {
             $table->id();
             $table->date('datumSamenstelling');
             $table->date('datumUitgifte');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->integer('quantity');
             $table->integer('klant_id');
             $table->timestamps();
         });

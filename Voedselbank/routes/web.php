@@ -26,8 +26,8 @@ Route::post('/klant', [KlantenController::class, 'store'])->name('klant.store');
 Route::get('/klant/{klant}/edit', [KlantenController::class, 'edit'])->name('klant.edit');
 Route::put('/klant/{klant}', [KlantenController::class, 'update'])->name('klant.update');
 Route::delete('/klant/{klant}', [KlantenController::class, 'destroy'])->name('klant.destroy');
-
-
+Route::get('/klant/{id}', [KlantenController::class, 'show'])->name('klant.show');
+Route::delete('/voedselpakket/{id}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
 
 
 
@@ -38,7 +38,9 @@ Route::get('/voedselpakket/create/{klant_id}', [VoedselPakketController::class, 
 Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('voedselpakket.store');
 Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
-Route::delete('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
+
+
+
 
 
 
