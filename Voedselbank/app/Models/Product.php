@@ -14,7 +14,7 @@ class Product extends Model
 
     public function allergie()
     {
-        return $this->belongsTo(Allergy::class, 'allergie_id');
+        return $this->belongsTo(Allergie::class, 'allergie_id');
     }
 
     public function categorie()

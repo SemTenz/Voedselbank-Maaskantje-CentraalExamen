@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Allergy extends Model
+class Allergie extends Model
 {
     use HasFactory;
 
@@ -13,5 +13,5 @@ class Allergy extends Model
     protected $table = 'allergie';
 
     // Assuming 'name' is a field in the 'allergies' table that we want to be mass assignable
-    protected $fillable = ['name', 'description', 'image'];
+    protected $fillable = ['name'];
 }
