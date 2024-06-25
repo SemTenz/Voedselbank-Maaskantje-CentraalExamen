@@ -19,7 +19,7 @@ class CreateCategoriesTable extends Migration
     
         DB::table('categories')->insert([
             ['name' => 'Brood, groente, fruit'],
-            ['name' => 'Klaas, vleeswaren'],
+            ['name' => 'Kaas, vleeswaren'],
             ['name' => 'Zuivel, plantaardig en eieren'],
             ['name' => 'Bakkerij en banket'],
             ['name' => 'Frisdrank, sappen, koffie en thee'],
