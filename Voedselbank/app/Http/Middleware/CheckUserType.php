@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckUserType
 {
-    public function handle(Request $request, Closure $next, string $type)
+    public function handle(Request $request, Closure $next, ...$types)
     {
-        if (Auth::check() && Auth::user()->usertype === $type) {
+        if (Auth::check() && in_array(Auth::user()->usertype, $types)) {
             return $next($request);
         }
 
-        abort(403, 'Niet bevoegd'); // 403: Forbidden
+        return redirect('/')->with('error', 'Unauthorized access');
     }
 }

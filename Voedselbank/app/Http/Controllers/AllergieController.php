@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Allergie; // Using the Allergy model
+use App\Models\Allergie; // Using the Allergie model
 use Illuminate\Support\Facades\Log;
 
 class AllergieController extends Controller
@@ -12,6 +12,8 @@ class AllergieController extends Controller
     public function index(Request $request)
     {
         try {
+            $query = Allergie::query();
+
             $query = Allergie::query();
 
             // Initialize sort variables
