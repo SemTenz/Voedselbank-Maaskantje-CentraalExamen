@@ -16,7 +16,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('categorie_id')->nullable();
             $table->unsignedInteger('aantal')->default(0); // Toegevoegd voor aantal, standaard op 0
             $table->timestamps();
-            $table->foreign('allergie_id')->references('id')->on('allergies')->onDelete('set null');
+
+            // $table->foreign('allergie_id')->references('id')->on('allergies')->onDelete('set null');
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
