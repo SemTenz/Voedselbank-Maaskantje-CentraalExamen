@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\AllergieController;
+use App\Http\Controllers\LeveranciersController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VoedselPakketController;
 use App\Http\Controllers\KlantenController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AllergieController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,8 +56,46 @@ Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'u
 
 
 
+
+
+
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+require __DIR__ . '/auth.php';
+Route::get('/leveranciers', [LeveranciersController::class, 'index'])
+    ->name('leveranciers.index')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+Route::get('/leveranciers/create', [LeveranciersController::class, 'create'])
+    ->name('leveranciers.create')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+Route::post('/leveranciers', [LeveranciersController::class, 'store'])
+    ->name('leveranciers.store')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+Route::get('/leveranciers/{leverancier}', [LeveranciersController::class, 'show'])
+    ->name('leveranciers.show')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+Route::get('/leveranciers/{leverancier}/edit', [LeveranciersController::class, 'edit'])
+    ->name('leveranciers.edit')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+Route::put('/leveranciers/{leverancier}', [LeveranciersController::class, 'update'])
+    ->name('leveranciers.update')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+Route::delete('/leveranciers/{leverancier}', [LeveranciersController::class, 'destroy'])
+    ->name('leveranciers.destroy')
+    ->middleware('checkusertype:magazijnmedewerker');
+
+
 
 require __DIR__ . '/auth.php';
