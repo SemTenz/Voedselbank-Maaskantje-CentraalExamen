@@ -16,6 +16,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @if (auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
+                        <x-nav-link :href="route('leveranciers.create')" :active="request()->routeIs('leveranciers.create')">
+                            {{ __('Leveranciers') }}
+                        </x-nav-link>
+                    @endif
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
