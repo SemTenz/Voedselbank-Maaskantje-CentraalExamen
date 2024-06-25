@@ -12,4 +12,6 @@
     @else
     <p>This klant does not have a voedselpakket.</p>
     @endif
+
+    <a href="{{ route('voedselpakket.edit', $klant->id) }}">Edit</a>
 </x-app-layout>

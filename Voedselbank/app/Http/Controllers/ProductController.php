@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Allergie;
+use App\Models\Allergy;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $allergies = Allergie::all();
+        $allergies = Allergy::all();
         $categories = Categorie::all();
         return view('products.create', compact('allergies', 'categories'));
     }
@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        $allergies = Allergie::all();
+        $allergies = Allergy::all();
         $categories = Categorie::all();
         return view('products.edit', compact('product', 'allergies', 'categories'));
     }

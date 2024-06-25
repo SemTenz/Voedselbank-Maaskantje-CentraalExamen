@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllergieController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VoedselPakketController;
@@ -20,10 +21,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::middleware('auth')->group(function () {
+    Route::get('/allergie', [AllergieController::class, 'index'])->name('allergie.index');
+    Route::post('/allergie', [AllergieController::class, 'store'])->name('allergie.store');
+    Route::get('/allergie/create', [AllergieController::class, 'create'])->name('allergie.create');
+    // Route for showing the form to edit an existing Allergie
+    Route::get('/allergie/{id}/edit', [AllergieController::class, 'edit'])->name('allergie.edit');
+    // Route for updating the Allergie
+    Route::put('/allergie/{id}', [AllergieController::class, 'update'])->name('allergie.update');
+    Route::delete('/allergie/{id}', [AllergieController::class, 'destroy'])->name('allergie.destroy');
+});
+
 Route::get('/klant', [KlantenController::class, 'index'])->name('klant.index');
 Route::get('/klant/create', [KlantenController::class, 'create'])->name('klant.create');
 Route::post('/klant', [KlantenController::class, 'store'])->name('klant.store');
-Route::get('/klant/{klant}/edit', [KlantenController::class, 'edit'])->name('klant.edit');
+Route::get('/klant/{id}/edit', 'VoedselPakketController@edit')->name('klant.edit');
 Route::put('/klant/{klant}', [KlantenController::class, 'update'])->name('klant.update');
 Route::delete('/klant/{klant}', [KlantenController::class, 'destroy'])->name('klant.destroy');
 Route::get('/klant/{id}', [KlantenController::class, 'show'])->name('klant.show');
@@ -38,9 +51,6 @@ Route::get('/voedselpakket/create/{klant_id}', [VoedselPakketController::class, 
 Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('voedselpakket.store');
 Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
-
-
-
 
 
 
