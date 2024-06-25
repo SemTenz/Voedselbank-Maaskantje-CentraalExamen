@@ -17,6 +17,11 @@
                     </x-nav-link>
                 </div>
             </div>
+                <!-- Voeg hier de link naar 'Create' pagina toe -->
+    <x-nav-link :href="route('products.create')" :active="request()->routeIs('products.create')">
+        {{ __('Create Product') }}
+    </x-nav-link>
+</div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
