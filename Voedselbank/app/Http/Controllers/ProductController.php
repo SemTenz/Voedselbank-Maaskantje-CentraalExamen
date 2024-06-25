@@ -14,10 +14,29 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        // Haal alle producten op
+        $productsQuery = Product::query();
+
+        // Filter op streepjescode indien opgegeven in het zoekveld
+        $barcode = $request->input('barcode');
+        if ($barcode) {
+            $productsQuery->where('streepjescode', 'like', '%' . $barcode . '%');
+        }
+
+        // Sorteer producten op basis van de gespecificeerde kolom (standaard op naam)
+        $sort_by = $request->input('sort_by', 'naam');
+        $sort_order = $request->input('sort_order', 'asc');
+        if (in_array($sort_by, ['streepjescode', 'naam', 'categorie_id', 'aantal'])) {
+            $productsQuery->orderBy($sort_by, $sort_order);
+        }
+
+        $products = $productsQuery->get();
+        $categories = Categorie::all(); // Haal alle categorieën op
+        $allergies = Allergie::all(); // Haal alle allergieën op
+
+        return view('products.index', compact('products', 'categories', 'allergies', 'sort_by', 'sort_order'));
     }
 
     /**
@@ -39,17 +58,45 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'naam' => 'required',
-            'allergie_id' => 'nullable|exists:allergies,id',
-            'categorie_id' => 'nullable|exists:categories,id',
-        ]);
+{
+    $request->validate([
+        'naam' => 'required',
+        'allergie_id' => 'nullable|exists:allergies,id',
+        'categorie_id' => 'nullable|exists:categories,id',
+        'aantal' => 'required|integer|min:0', // Validatie voor aantal
+    ]);
 
-        Product::create($request->all());
+    // Genereer een willekeurige streepjescode bestaande uit 7 cijfers
+    $streepjescode = $this->generateRandomNumericString(7);
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+    $product = new Product();
+    $product->naam = $request->naam;
+    $product->streepjescode = $streepjescode; // Automatisch gegenereerde streepjescode
+    $product->allergie_id = $request->allergie_id;
+    $product->categorie_id = $request->categorie_id;
+    $product->aantal = $request->aantal; // Voeg aantal toe
+    $product->save();
+
+    return redirect()->route('products.index')->with('success', 'Product succesvol aangemaakt.');
+}
+
+/**
+ * Genereer een willekeurige numerieke string van opgegeven lengte.
+ *
+ * @param int $length Lengte van de gewenste string
+ * @return string Willekeurige numerieke string
+ */
+private function generateRandomNumericString($length)
+{
+    $characters = '0123456789';
+    $randomString = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, strlen($characters) - 1)];
     }
+
+    return $randomString;
+}
 
     /**
      * Toon het formulier voor het bewerken van een bestaand product.
@@ -83,7 +130,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('products.index')->with('success', 'Product succesvol aangepast.');
     }
 
     /**
@@ -97,6 +144,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('products.index')->with('success', 'Product succesvol verwijderd.');
     }
 }
+
