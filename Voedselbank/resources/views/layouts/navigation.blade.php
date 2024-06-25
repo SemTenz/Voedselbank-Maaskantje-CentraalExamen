@@ -23,6 +23,20 @@
                         </x-nav-link>
                     </div>
                 @endif
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @if (auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
+                        <x-nav-link :href="route('leveranciers.create')" :active="request()->routeIs('leveranciers.create')">
+                            {{ __('Leveranciers toevoegen') }}
+                        </x-nav-link>
+                    @endif
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @if (auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
+                        <x-nav-link :href="route('leveranciers.index')" :active="request()->routeIs('leveranciers.index')">
+                            {{ __('Leveranciers overzicht') }}
+                        </x-nav-link>
+                    @endif
+                </div>
 
             </div>
 
