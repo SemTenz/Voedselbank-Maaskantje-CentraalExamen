@@ -4,13 +4,14 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
+<<<<<<< HEAD
                 <div class="hidden sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -40,6 +41,39 @@
                                 <div>{{ Auth::user()->username }}</div>
                 
                                 <div class="ms-1">
+=======
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    @if (auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
+                        <x-nav-link :href="route('leveranciers.create')" :active="request()->routeIs('leveranciers.create')">
+                            {{ __('Leveranciers toevoegen') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('leveranciers.index')" :active="request()->routeIs('leveranciers.index')">
+                            {{ __('Leveranciers overzicht') }}
+                        </x-nav-link>
+                    @endif
+                    <x-nav-link :href="route('klant.index')" :active="request()->routeIs('klant.index')">
+                        {{ __('Maak voedselpakket') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                        {{ __('Productvoorraadoverzicht') }}
+                    </x-nav-link>
+                    <!-- Voeg hier de link naar 'Create' pagina toe -->
+                </div>
+            </div>
+
+            <!-- Settings Dropdown -->
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            <div>{{ Auth::user()->username }}</div>
+
+                            <div class="ms-1">
+>>>>>>> 14a4de7f663884ad9ffcacf0349153de037eb819
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
@@ -54,6 +88,7 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
+<<<<<<< HEAD
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -79,6 +114,26 @@
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
+=======
+
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                                                    this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    </x-slot>
+                </x-dropdown>
+            </div>
+
+            <!-- Hamburger -->
+            <div class="-mr-2 flex items-center sm:hidden">
+                <button @click="open = !open"
+>>>>>>> 14a4de7f663884ad9ffcacf0349153de037eb819
                     class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
@@ -98,6 +153,21 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if (auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
+                <x-responsive-nav-link :href="route('leveranciers.create')" :active="request()->routeIs('leveranciers.create')">
+                    {{ __('Leveranciers toevoegen') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('leveranciers.index')" :active="request()->routeIs('leveranciers.index')">
+                    {{ __('Leveranciers overzicht') }}
+                </x-responsive-nav-link>
+            @endif
+            <x-responsive-nav-link :href="route('klant.index')" :active="request()->routeIs('klant.index')">
+                {{ __('Maak voedselpakket') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs('products.index')">
+                {{ __('Productvoorraadoverzicht') }}
+            </x-responsive-nav-link>
+            <!-- Voeg hier de link naar 'Create' pagina toe -->
         </div>
 
         <!-- Responsive Settings Options -->
@@ -116,8 +186,9 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                    <x-responsive-nav-link :href="route('logout')"
+                        onclick="event.preventDefault();
+                                                                                this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
