@@ -30,11 +30,10 @@ Route::delete('/klant/{klant}', [KlantenController::class, 'destroy'])->name('kl
 
 
 
-Route::get('/voedselpakket/create/{klant_id}', [VoedselPakketController::class, 'create']);
 
 
 Route::get('/voedselpakket', [VoedselPakketController::class, 'index'])->name('voedselpakket.index');
-Route::get('/voedselpakket/create', [VoedselPakketController::class, 'create'])->name('voedselpakket.create');
+Route::get('/voedselpakket/create/{klant_id}', [VoedselPakketController::class, 'create'])->name('voedselpakket.create');
 Route::post('/voedselpakket', [VoedselPakketController::class, 'store'])->name('voedselpakket.store');
 Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::class, 'edit'])->name('voedselpakket.edit');
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');

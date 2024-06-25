@@ -19,20 +19,20 @@ class VoedselPakketController extends Controller
 
     public function create($klant_id)
     {
-
-        return view('voedselpakket.create', compact('klant_id'));
+        $klant = Klant::findOrFail($klant_id);
+        return view('voedselpakket.create', compact('klant'));
     }
     public function store(Request $request)
     {
 
-        dd($request->all());
+
         $voedselpakket = new VoedselPakket();
-        $voedselpakket->datumUitgifte = now();
+        $voedselpakket->datumUitgifte = $request->datum_uitgegeven;
         $voedselpakket->datumSamenstelling = now();
         $voedselpakket->klant_id = $request->klant_id;
         $voedselpakket->save();
 
-        return redirect()->route('voedselpakket.index');
+        return redirect()->route('klant.index');
     }
 
     public function edit($id)
