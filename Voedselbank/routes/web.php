@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     // Route for updating the Allergie
     Route::put('/allergie/{id}', [AllergieController::class, 'update'])->name('allergie.update');
     Route::delete('/allergie/{id}', [AllergieController::class, 'destroy'])->name('allergie.destroy');
+    Route::get('/search-allergies', 'AllergieController@search')->name('allergie.search');
 });
 
 Route::get('/klant', [KlantenController::class, 'index'])->name('klant.index');
