@@ -16,21 +16,10 @@ class CreateAllergiesTable extends Migration
 
         // Voeg optionele allergieën toe
         DB::table('allergies')->insert([
-            ['name' => 'Noten'],
-            ['name' => 'Melk'],
-            ['name' => 'Gluten'],
-            ['name' => 'Soja'],
-            ['name' => 'Vis'],
-            ['name' => 'Schaaldieren'],
-            ['name' => 'Ei'],
-            ['name' => 'Selderij'],
-            ['name' => 'Mosterd'],
-            ['name' => 'Pinda'],
-            ['name' => 'Sesamzaad'],
-            ['name' => 'Lupine'],
-            ['name' => 'Weekdieren'],
-            ['name' => 'Zwaveldioxide'],
-            ['name' => 'Sulfiet'],
+            ['name' => 'Geen varkensvlees'],
+            ['name' => 'Allergisch voor gluten, pindas, schaaldieren, hazelnoten, lactose, anders'],
+            ['name' => 'Veganistisch'],
+            ['name' => 'Vegatarisch'],
         ]);
     }
 
