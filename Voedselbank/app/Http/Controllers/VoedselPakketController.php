@@ -88,8 +88,8 @@ class VoedselPakketController extends Controller
     public function destroy($id)
     {
         // Delete all voedselpakketten for the klant
-        VoedselPakket::where('klant_id', $id)->delete();
 
+        VoedselPakket::where('klant_id', $id)->delete();
         return redirect()->route('klant.index');
     }
 }

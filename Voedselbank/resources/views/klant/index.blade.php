@@ -17,7 +17,6 @@
         @foreach($klant as $klant)
         <tr>
             <td><a href="{{ route('klant.show', $klant->id) }}">{{ $klant->naam }}</a></td>
-
             <td>{{ $klant->telefoonnummer }}</td>
             <td>{{ $klant->email }}</td>
             <td>{{ $klant->aantal_volwassenen }}</td>
@@ -28,7 +27,7 @@
 
             <td>
                 @if ($klant->voedselpakketten->first())
-                <form action="{{ route('voedselpakket.destroy', $klant->voedselpakketten->first()->id) }}" method="POST">
+                <form action="{{ route('voedselpakket.destroy', $klant->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit">Delete Voedselpakket</button>
