@@ -36,15 +36,16 @@
 
             // Add product row
             $('#add-product-btn').click(function() {
-                let productRow = 
-                <div class="product-row">
-                    <select name="products[]" class="product-select" required>
-                         + options + 
-                    </select>
-                    <input type="number" name="quantities[]" class="product-quantity" placeholder="Hoeveelheid" min="1" required>
-                    <button type="button" class="remove-product-btn">Verwijder</button>
-                </div>
-                ;
+                let productRow =
+                    `<div class="product-row flex items-center space-x-3">
+                    <div class="flex-1">
+                        <select name="products[]" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" required>
+                            ${options}
+                        </select>
+                    </div>
+                    <input type="number" name="quantities[]" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Hoeveelheid" min="1" required>
+                    <button type="button" class="remove-product-btn bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Verwijder</button>
+                </div>`;
 
                 $('#product-container').append(productRow);
             });
