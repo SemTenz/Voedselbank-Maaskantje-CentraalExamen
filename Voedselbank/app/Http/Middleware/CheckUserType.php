@@ -8,17 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckUserType
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     * @param  string  $type
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function handle(Request $request, Closure $next, string $type)
+    public function handle(Request $request, Closure $next, ...$types)
     {
-        if (Auth::check() && Auth::user()->usertype === $type) {
+        if (Auth::check() && in_array(Auth::user()->usertype, $types)) {
             return $next($request);
         }
 

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Categorie;
 use App\Models\Allergie;
-use Illuminate\Support\Str;
 
 class ProductsSeeder extends Seeder
 {
@@ -15,6 +14,19 @@ class ProductsSeeder extends Seeder
         // Haal alle categorieën en allergieën op
         $categories = Categorie::all();
         $allergies = Allergie::all();
+
+        // Check if there are no categories or allergies
+        if ($categories->isEmpty()) {
+            // Create a default category if none exist
+            $defaultCategory = Categorie::create(['name' => 'Default Category']);
+            $categories = collect([$defaultCategory]);
+        }
+
+        if ($allergies->isEmpty()) {
+            // Create a default allergy if none exist
+            $defaultAllergy = Allergie::create(['name' => 'Default Allergy']);
+            $allergies = collect([$defaultAllergy]);
+        }
 
         // Maak 50 producten aan
         for ($i = 0; $i < 50; $i++) {

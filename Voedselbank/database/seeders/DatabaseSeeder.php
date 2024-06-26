@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             LeveranciersTableSeeder::class,
+            ProductsSeeder::class,
         ]);
         Klant::factory(50)->create();
-        Product::factory(20)->create();
     }
 }
