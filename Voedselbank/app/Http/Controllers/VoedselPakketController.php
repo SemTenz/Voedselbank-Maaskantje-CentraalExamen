@@ -108,17 +108,17 @@ class VoedselPakketController extends Controller
     }
 
 
-
-
-
-
-
-
     public function destroy($id)
     {
-        // Delete all voedselpakketten for the klant
+        $voedselpakket = VoedselPakket::findOrFail($id);
 
-        VoedselPakket::where('klant_id', $id)->delete();
-        return redirect()->route('klant.index');
+        // Controleer of het voedselpakket producten bevat
+        if ($voedselpakket->products()->exists()) {
+            return redirect()->route('voedselpakket.index')->with('error', 'Voedselpakket kan niet worden verwijderd omdat het producten bevat.');
+        }
+
+        $voedselpakket->delete();
+
+        return redirect()->route('voedselpakket.index')->with('success', 'Voedselpakket succesvol verwijderd.');
     }
 }

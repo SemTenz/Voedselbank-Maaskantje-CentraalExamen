@@ -70,10 +70,10 @@
         <div class="row justify-content-center mt-5">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Welkom bij Voedselbank Maaskaantje</div>
+                    <div class="card-header">Welkom bij Voedselbank Maaskantje</div>
                     <div class="card-body">
                         <p>Welkom! Log in om verder te gaan.</p>
-                        <a href="{{ route('login') }}" class="btn btn-primary">Inlogggen</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary">Inloggen</a>
                     </div>
                 </div>
             </div>

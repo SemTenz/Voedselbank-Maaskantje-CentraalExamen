@@ -17,18 +17,12 @@ class ProductsSeeder extends Seeder
 
         // Check if there are no categories or allergies
         if ($categories->isEmpty()) {
-            // Create a default category if none exist
-            $defaultCategory = Categorie::create(['name' => 'Default Category']);
+            // Maak een standaard categorie als er geen zijn
+            $defaultCategory = Categorie::create(['name' => 'Standaard Categorie']);
             $categories = collect([$defaultCategory]);
         }
 
-        if ($allergies->isEmpty()) {
-            // Create a default allergy if none exist
-            $defaultAllergy = Allergie::create(['name' => 'Default Allergy']);
-            $allergies = collect([$defaultAllergy]);
-        }
-
-        // Maak 50 producten aan
+        // Maak producten aan
         for ($i = 0; $i < 50; $i++) {
             Product::create([
                 'naam' => 'Product ' . ($i + 1),

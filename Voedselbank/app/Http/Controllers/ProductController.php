@@ -30,7 +30,7 @@ class ProductController extends Controller
         }
 
         // Voeg paginering toe met een limiet van 8 producten per pagina
-        $products = $productsQuery->paginate(8);
+        $products = $productsQuery->paginate(5000);
 
         $categories = Categorie::all();
         $allergies = Allergie::all();
@@ -155,14 +155,14 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-
-        // Controleer of het product in een voedselpakket zit
-        if ($product->voedselPakketten()->exists()) {
+    
+        if ($product->voedselPakketten()) {
             return redirect()->route('products.index')->with('error', 'Product kan niet worden verwijderd omdat het in een voedselpakket zit.');
         }
-
+    
+        // Als het product niet in een voedselpakket zit, verwijder het dan
         $product->delete();
-
+    
         return redirect()->route('products.index')->with('success', 'Product succesvol verwijderd.');
     }
 }

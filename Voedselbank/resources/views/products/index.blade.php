@@ -1,5 +1,3 @@
-<!-- products/index.blade.php -->
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -17,6 +15,13 @@
                         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
                             <p class="font-bold">Succes</p>
                             <p>{{ session('success') }}</p>
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                            <p class="font-bold">Fout</p>
+                            <p>{{ session('error') }}</p>
                         </div>
                     @endif
 
@@ -39,7 +44,7 @@
                     <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                         <thead class="bg-gray-200 text-gray-700">
                             <tr>
-                                <th class="px-4 py-3"> <!-- Streepjescode -->
+                                <th class="px-4 py-3">
                                     <a href="{{ route('products.index', ['sort_by' => 'streepjescode', 'sort_order' => $sort_by == 'streepjescode' && $sort_order == 'asc' ? 'desc' : 'asc']) }}"
                                         class="flex items-center justify-between text-sm font-semibold">
                                         Streepjescode
@@ -52,7 +57,7 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th class="px-4 py-3"> <!-- Productnaam -->
+                                <th class="px-4 py-3">
                                     <a href="{{ route('products.index', ['sort_by' => 'naam', 'sort_order' => $sort_by == 'naam' && $sort_order == 'asc' ? 'desc' : 'asc']) }}"
                                         class="flex items-center justify-between text-sm font-semibold">
                                         Productnaam
@@ -65,7 +70,7 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th class="px-4 py-3"> <!-- Categorie -->
+                                <th class="px-4 py-3">
                                     <a href="{{ route('products.index', ['sort_by' => 'categorie_id', 'sort_order' => $sort_by == 'categorie_id' && $sort_order == 'asc' ? 'desc' : 'asc']) }}"
                                         class="flex items-center justify-between text-sm font-semibold">
                                         Categorie
@@ -78,7 +83,7 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th class="px-4 py-3"> <!-- Aantal -->
+                                <th class="px-4 py-3">
                                     <a href="{{ route('products.index', ['sort_by' => 'aantal', 'sort_order' => $sort_by == 'aantal' && $sort_order == 'asc' ? 'desc' : 'asc']) }}"
                                         class="flex items-center justify-between text-sm font-semibold">
                                         Aantal
@@ -137,16 +142,29 @@
                                     </svg>
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-sm leading-5 font-medium">
-                                        {{ $searchMessage }}
-                                    </p>
+                                    <p class="text-sm">{{ $searchMessage }}</p>
                                 </div>
                             </div>
                         </div>
                     @endif
 
+                    @if ($products->isEmpty() && empty($searchMessage))
+                        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-5 w-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 6a1 1 0 011-1h.5a.5.5 0 010 1h-.5a1 1 0 01-1-1zm1 6a1 1 0 100-2 1 1 0 000 2z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm">Geen producten gevonden.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
-                    <!-- Voeg paginering links toe -->
                     <div class="mt-4">
                         {{ $products->links() }}
                     </div>
