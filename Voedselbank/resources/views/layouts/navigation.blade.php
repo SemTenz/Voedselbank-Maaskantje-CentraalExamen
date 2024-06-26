@@ -19,12 +19,6 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         @if (auth()->user() && auth()->user()->usertype === 'magazijnmedewerker')
-                        <x-nav-link :href="route('leveranciers.create')" :active="request()->routeIs('leveranciers.create')">
-                            {{ __('Leveranciers toevoegen') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('leveranciers.index')" :active="request()->routeIs('leveranciers.index')">
-                            {{ __('Leveranciers overzicht') }}
-                        </x-nav-link>
 
                         <x-nav-link :href="route('allergie.index')" :active="request()->routeIs('allergie.index')">
                             {{ __('Allergie overzicht') }}

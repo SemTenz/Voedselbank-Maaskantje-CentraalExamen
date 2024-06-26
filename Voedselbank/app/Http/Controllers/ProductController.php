@@ -33,7 +33,7 @@ class ProductController extends Controller
         $products = $productsQuery->paginate(5000);
 
         $categories = Categorie::all();
-        $allergies = Allergie::all();
+        $allergie = Allergie::all();
 
         // Controleer of er resultaten zijn gevonden
         $searchMessage = '';
@@ -43,7 +43,7 @@ class ProductController extends Controller
             $searchMessage = 'Geen producten gevonden.';
         }
 
-        return view('products.index', compact('products', 'categories', 'allergies', 'sort_by', 'sort_order', 'searchMessage'));
+        return view('products.index', compact('products', 'categories', 'allergie', 'sort_by', 'sort_order', 'searchMessage'));
     }
 
     /**
@@ -53,9 +53,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $allergies = Allergie::all();
+        $allergie = Allergie::all();
         $categories = Categorie::all();
-        return view('products.create', compact('allergies', 'categories'));
+        return view('products.create', compact('allergie', 'categories'));
     }
 
     /**
@@ -68,7 +68,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'naam' => 'required',
-            'allergie_id' => 'nullable|exists:allergies,id',
+            'allergie_id' => 'nullable|exists:allergie,id',
             'categorie_id' => 'nullable|exists:categories,id',
             'aantal' => 'required|integer|min:0', // Validatie voor aantal
         ]);
@@ -114,9 +114,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail($id);
-        $allergies = Allergie::all();
+        $allergie = Allergie::all();
         $categories = Categorie::all();
-        return view('products.edit', compact('product', 'allergies', 'categories'));
+        return view('products.edit', compact('product', 'allergie', 'categories'));
     }
 
     /**
@@ -130,7 +130,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'naam' => 'required',
-            'allergie_id' => 'nullable|exists:allergies,id',
+            'allergie_id' => 'nullable|exists:allergie,id',
             'categorie_id' => 'nullable|exists:categories,id',
             'aantal' => 'required|integer|min:0',
         ]);

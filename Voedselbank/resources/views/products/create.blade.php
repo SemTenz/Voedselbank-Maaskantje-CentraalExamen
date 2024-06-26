@@ -37,7 +37,7 @@
                             <label for="allergie_id" class="font-semibold">Allergie:</label>
                             <select id="allergie_id" name="allergie_id" class="border-gray-300 border-solid border py-2 px-3 rounded-md">
                                 <option value="">Selecteer Allergie</option>
-                                @foreach($allergies as $allergie)
+                                @foreach($allergie as $allergie)
                                 <option value="{{ $allergie->id }}" {{ old('allergie_id') == $allergie->id ? 'selected' : '' }}>
                                     {{ $allergie->name }}
                                 </option>

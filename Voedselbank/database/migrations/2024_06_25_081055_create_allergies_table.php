@@ -12,14 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('allergies', function (Blueprint $table) {
+        Schema::create('allergie', function (Blueprint $table) {
             $table->id();
             $table->string('name'); // Assuming you want a 'name' column for the allergy name
             $table->timestamps(); // Laravel default timestamps
 });
 
 // Voeg optionele allergieën toe
-    DB::table('allergies')->insert([
+    DB::table('allergie')->insert([
     ['name' => 'Geen varkensvlees'],
     ['name' => 'Allergisch voor gluten, pindas, schaaldieren, hazelnoten, lactose, anders'],
     ['name' => 'Veganistisch'],
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('allergies');
+        Schema::dropIfExists('allergie');
     }
 };

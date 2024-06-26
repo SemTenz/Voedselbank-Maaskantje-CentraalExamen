@@ -39,7 +39,7 @@
                             </tr>
                         </thead>
                         <tbody class="bg-gray-800">
-                            @foreach($allergies as $allergie)
+                            @foreach($allergie as $allergie)
                             <tr>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm text-gray-200">
                                     {{ $allergie->name }}

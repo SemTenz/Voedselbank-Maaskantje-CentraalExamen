@@ -13,9 +13,9 @@ class ProductsSeeder extends Seeder
     {
         // Haal alle categorieën en allergieën op
         $categories = Categorie::all();
-        $allergies = Allergie::all();
+        $allergie = Allergie::all();
 
-        // Check if there are no categories or allergies
+        // Check if there are no categories or allergie
         if ($categories->isEmpty()) {
             // Maak een standaard categorie als er geen zijn
             $defaultCategory = Categorie::create(['name' => 'Standaard Categorie']);
@@ -27,7 +27,7 @@ class ProductsSeeder extends Seeder
             Product::create([
                 'naam' => 'Product ' . ($i + 1),
                 'streepjescode' => $this->generateRandomNumericString(7),
-                'allergie_id' => $allergies->random()->id,
+                'allergie_id' => $allergie->random()->id,
                 'categorie_id' => $categories->random()->id,
                 'aantal' => rand(1, 100),
             ]);

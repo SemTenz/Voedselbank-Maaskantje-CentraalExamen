@@ -5,6 +5,6 @@
     <div>
         <h1>{{ $product->name }}</h1>
         <p>{{ $product->description }}</p>
-        <p>{{ $product->allergies}}</p>
+        <p>{{ $product->allergie}}</p>
     </div>
 @endsection

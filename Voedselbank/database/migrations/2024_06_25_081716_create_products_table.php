@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('aantal')->default(0);
             $table->timestamps();
 
-            $table->foreign('allergies_id')->references('id')->on('allergies')->onDelete('set null');
+            $table->foreign('allergie_id')->references('id')->on('allergie')->onDelete('set null');
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('set null');
         });
     }

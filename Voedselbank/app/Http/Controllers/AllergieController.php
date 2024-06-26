@@ -33,12 +33,12 @@ class AllergieController extends Controller
                 return redirect()->route('allergie.index')->withErrors(['name' => 'Vul a.u.b dit veld in!']);
             }
 
-            $allergies = $query->get(); // Consider using paginate() for large datasets
-            return view('allergie.index', compact('allergies', 'sort_by', 'sort_order'));
+            $allergie = $query->get(); // Consider using paginate() for large datasets
+            return view('allergie.index', compact('allergie', 'sort_by', 'sort_order'));
         } catch (\Exception $e) {
             Log::error($e->getMessage()); // Log the error for debugging
             session()->flash('error', 'Er is een onverwachte fout opgetreden bij het laden van de allergiegegevens.');
-            return view('allergie.index', ['allergies' => collect([]), 'sort_by' => 'name', 'sort_order' => 'asc']);
+            return view('allergie.index', ['allergie' => collect([]), 'sort_by' => 'name', 'sort_order' => 'asc']);
         }
     }
 
