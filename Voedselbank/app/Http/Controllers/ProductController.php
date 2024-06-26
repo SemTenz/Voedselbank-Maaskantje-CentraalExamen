@@ -17,24 +17,24 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $productsQuery = Product::query();
-    
+
         $barcode = $request->input('barcode');
         if ($barcode) {
             $productsQuery->where('streepjescode', 'like', '%' . $barcode . '%');
         }
-    
+
         $sort_by = $request->input('sort_by', 'naam');
         $sort_order = $request->input('sort_order', 'asc');
         if (in_array($sort_by, ['streepjescode', 'naam', 'categorie_id', 'aantal'])) {
             $productsQuery->orderBy($sort_by, $sort_order);
         }
-    
-        // Voeg paginering toe met een limiet van 10 producten per pagina
+
+        // Voeg paginering toe met een limiet van 8 producten per pagina
         $products = $productsQuery->paginate(8);
-    
+
         $categories = Categorie::all();
         $allergies = Allergie::all();
-    
+
         // Controleer of er resultaten zijn gevonden
         $searchMessage = '';
         if ($barcode && $products->isEmpty()) {
@@ -42,7 +42,7 @@ class ProductController extends Controller
         } elseif ($products->isEmpty()) {
             $searchMessage = 'Geen producten gevonden.';
         }
-    
+
         return view('products.index', compact('products', 'categories', 'allergies', 'sort_by', 'sort_order', 'searchMessage'));
     }
 
@@ -65,45 +65,45 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'naam' => 'required',
-        'allergie_id' => 'nullable|exists:allergies,id',
-        'categorie_id' => 'nullable|exists:categories,id',
-        'aantal' => 'required|integer|min:0', // Validatie voor aantal
-    ]);
+    {
+        $request->validate([
+            'naam' => 'required',
+            'allergie_id' => 'nullable|exists:allergies,id',
+            'categorie_id' => 'nullable|exists:categories,id',
+            'aantal' => 'required|integer|min:0', // Validatie voor aantal
+        ]);
 
-    // Genereer een willekeurige streepjescode bestaande uit 7 cijfers
-    $streepjescode = $this->generateRandomNumericString(7);
+        // Genereer een willekeurige streepjescode bestaande uit 7 cijfers
+        $streepjescode = $this->generateRandomNumericString(7);
 
-    $product = new Product();
-    $product->naam = $request->naam;
-    $product->streepjescode = $streepjescode; // Automatisch gegenereerde streepjescode
-    $product->allergie_id = $request->allergie_id;
-    $product->categorie_id = $request->categorie_id;
-    $product->aantal = $request->aantal; // Voeg aantal toe
-    $product->save();
+        $product = new Product();
+        $product->naam = $request->naam;
+        $product->streepjescode = $streepjescode; // Automatisch gegenereerde streepjescode
+        $product->allergie_id = $request->allergie_id;
+        $product->categorie_id = $request->categorie_id;
+        $product->aantal = $request->aantal; // Voeg aantal toe
+        $product->save();
 
-    return redirect()->route('products.index')->with('Product succesvol aangemaakt.');
-}
-
-/**
- * Genereer een willekeurige numerieke string van opgegeven lengte.
- *
- * @param int $length Lengte van de gewenste string
- * @return string Willekeurige numerieke string
- */
-private function generateRandomNumericString($length)
-{
-    $characters = '0123456789';
-    $randomString = '';
-
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        return redirect()->route('products.index')->with('success', 'Product succesvol aangemaakt.');
     }
 
-    return $randomString;
-}
+    /**
+     * Genereer een willekeurige numerieke string van opgegeven lengte.
+     *
+     * @param int $length Lengte van de gewenste string
+     * @return string Willekeurige numerieke string
+     */
+    private function generateRandomNumericString($length)
+    {
+        $characters = '0123456789';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
+    }
 
     /**
      * Toon het formulier voor het bewerken van een bestaand product.
@@ -118,6 +118,7 @@ private function generateRandomNumericString($length)
         $categories = Categorie::all();
         return view('products.edit', compact('product', 'allergies', 'categories'));
     }
+
     /**
      * Bijwerken van een bestaand product in de database.
      *
@@ -133,7 +134,7 @@ private function generateRandomNumericString($length)
             'categorie_id' => 'nullable|exists:categories,id',
             'aantal' => 'required|integer|min:0',
         ]);
-    
+
         $product = Product::findOrFail($id);
         $product->update([
             'naam' => $request->naam,
@@ -141,10 +142,9 @@ private function generateRandomNumericString($length)
             'categorie_id' => $request->categorie_id,
             'aantal' => $request->aantal,
         ]);
-    
-        return redirect()->route('products.index')->with('Product succesvol aangepast.');
+
+        return redirect()->route('products.index')->with('success', 'Product succesvol aangepast.');
     }
-    
 
     /**
      * Verwijderen van een product uit de database.
@@ -155,9 +155,14 @@ private function generateRandomNumericString($length)
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+
+        // Controleer of het product in een voedselpakket zit
+        if ($product->voedselPakketten()->exists()) {
+            return redirect()->route('products.index')->with('error', 'Product kan niet worden verwijderd omdat het in een voedselpakket zit.');
+        }
+
         $product->delete();
 
-        return redirect()->route('products.index')->with('Product succesvol verwijderd.');
+        return redirect()->route('products.index')->with('success', 'Product succesvol verwijderd.');
     }
 }
-

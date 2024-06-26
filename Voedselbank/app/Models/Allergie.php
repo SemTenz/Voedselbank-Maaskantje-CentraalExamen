@@ -9,10 +9,9 @@ class Allergie extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    // Explicitly defining the table is optional if it follows Laravel's naming convention
+    protected $table = 'allergie';
 
-    public function products()
-    {
-        return $this->hasMany(Product::class, 'allergie_id');
-    }
+    // Assuming 'name' is a field in the 'allergies' table that we want to be mass assignable
+    protected $fillable = ['name'];
 }
