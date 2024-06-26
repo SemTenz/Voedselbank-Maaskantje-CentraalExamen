@@ -4,6 +4,11 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    @if(session('success'))
+                        <div id="successMessage" class="mb-4 text-sm font-medium text-green-600 bg-green-100 border border-green-400 p-4 rounded-lg">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="flex items-center justify-between">
                         <h1 class="text-2xl font-semibold">Allergenen</h1>
                         <a href="{{ route('allergie.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Allergie toevoegen</a>
@@ -71,4 +76,12 @@
     </div>
 </div>
 @endif
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#successMessage').fadeOut('slow');
+        }, 3000); // 3000 milliseconds = 3 seconds
+    });
+</script>
 </x-app-layout>
