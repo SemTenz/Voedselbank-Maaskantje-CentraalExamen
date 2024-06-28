@@ -35,8 +35,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/search-allergies', 'AllergieController@search')->name('allergie.search');
 });
 
-
 Route::get('/klant', [KlantenController::class, 'index'])->name('klant.index');
+Route::get('/klant/create', [KlantenController::class, 'create'])->name('klant.create');
+Route::post('/klant', [KlantenController::class, 'store'])->name('klant.store');
+Route::get('/klant/{id}/edit', 'VoedselPakketController@edit')->name('klant.edit');
+Route::put('/klant/{klant}', [KlantenController::class, 'update'])->name('klant.update');
+Route::delete('/klant/{klant}', [KlantenController::class, 'destroy'])->name('klant.destroy');
 Route::get('/klant/{id}', [KlantenController::class, 'show'])->name('klant.show');
 Route::delete('/voedselpakket/{id}', [VoedselPakketController::class, 'destroy'])->name('voedselpakket.destroy');
 
@@ -48,9 +52,8 @@ Route::get('/voedselpakket/{voedselpakket}/edit', [VoedselPakketController::clas
 Route::put('/voedselpakket/{voedselpakket}', [VoedselPakketController::class, 'update'])->name('voedselpakket.update');
 
 
-
 // Routes voor directie (toegevoegd voor directie toegang)
-Route::middleware('checkusertype:magazijnmedewerker,directie')->group(function () {
+Route::middleware('checkusertype:magazijnmedewerker')->group(function () {
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
@@ -60,7 +63,7 @@ Route::middleware('checkusertype:magazijnmedewerker,directie')->group(function (
 });
 
 
-
+require __DIR__ . '/auth.php';
 Route::get('/leveranciers', [LeveranciersController::class, 'index'])
     ->name('leveranciers.index')
     ->middleware('checkusertype:magazijnmedewerker');
@@ -88,6 +91,7 @@ Route::put('/leveranciers/{leverancier}', [LeveranciersController::class, 'updat
 Route::delete('/leveranciers/{leverancier}', [LeveranciersController::class, 'destroy'])
     ->name('leveranciers.destroy')
     ->middleware('checkusertype:magazijnmedewerker');
+
 
 
 require __DIR__ . '/auth.php';
